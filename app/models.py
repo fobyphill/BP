@@ -94,7 +94,7 @@ class AccountManager(BaseUserManager):
 #         return self.username
 
 class UserAccount(AbstractUser):
-    pass
+    inn = models.CharField(max_length=11, unique=True)
 
 
 class Category(BasicModels):
