@@ -3,16 +3,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.db import IntegrityError
-from app.models import UserAccount
+from app.models import UserAccount, Item
 
 
 def index(request):
     if request.user.is_authenticated:
+        items = Item.objects.filter(is_active=True)
         ctx = {
-            'title': 'Home'
+            'title': 'Sales',
+            'items': items
         }
-
-        return render(request, "index.html", ctx)
+        return render(request, "sales/index.html", ctx)
     else:
         return HttpResponseRedirect(reverse("login"))
 

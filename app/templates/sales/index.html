@@ -177,7 +177,7 @@
 
             $(document).on('click', '.removeItem', function (e) {
                 var parentTr = $(this).parents('tr');
-                var id = cartTable.row(parentTr).row(':last-child').data()[7];
+                var id = cartTable.row(parentTr).data()[7];
                 cartTable.row(parentTr).remove().draw(false);
                 $('#item-'+id.toString()).parents('tr').removeClass('d-none');
             });
