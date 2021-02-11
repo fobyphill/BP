@@ -31,6 +31,19 @@
             display: inline-block;
             vertical-align: middle;
         }
+        .sales-input2{
+            height: 27px;
+            width: 50px;
+            text-align: center;
+            font-size: 15px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .total-field{
+            width: 75px;
+        }
 
         .dataTables_filter {
            float: left !important;
@@ -89,7 +102,7 @@
                         render  : function(data, type, row){
                             return '<div class="number">' +
                                         '<span class="minus">-</span>' +
-                                            '<input class="sales-input" type="number"  name="' + data + '-quantity" value="1" max="' + row[6] + '"/>' +
+                                            '<input class="sales-input2" type="text"  name="' + data + '-quantity" value="1" max="' + row[6] + '"/>' +
                                         '<span class="plus">+</span>' +
                                     '</div>';
                         }
@@ -97,13 +110,15 @@
                     {
                         targets: [ 3 ],
                         render  : function(data, type, row){
-                            return '<input class="sales-input" type="number" name="' + data + '-discount" value="0" min="0"/>';
+                            return '<div class="sales-input2"><span></span></div>';
+                                {#'<input class="sales-input2" type="number" name="' + data + '-discount" value="0" min="0"/>';#}
                         }
                     },
                     {
                         targets: [4],
                         render  : function(data, type, row){
-                             return '<span id="'+ row[7] +'_total">' + Number(data).toFixed(3) + '</span>';
+                             return '<div class="total-field"><span id="'+ row[7] +'_total">'
+                                 + Number(data).toFixed(3) + '</span></div>';
                         }
                     },
                     {
@@ -134,7 +149,20 @@
                 $input.change();
                 return false;
             });
-
+             $(document).on('change', '.sales-input2', function (e){
+                 let $input_change = $(this).parent().find('input');
+                 let $tds = $(this).parent().parent().parent().find('td');
+                 let stock = parseInt(cartTable.row($tds).data()[6]);
+                 let num = parseInt($input_change[0].value);
+                 if (num > stock){
+                     num = stock
+                     $input_change[0].value = num
+                 }
+                 let price = parseFloat($tds[1].childNodes[0].nodeValue);
+                 let $total = $tds[4].children[0];
+                 $total.innerText = String(price * num);
+                 return false;
+             });
             $(document).on('keyup keypress blur change', '.sales-input', function (e) {
                 var limit = $(this).attr('max');
 
