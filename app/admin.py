@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Item, Supplier, Category, UserAccount
+from app.models import Item, Supplier, Category, UserAccount, Transfer
 
 
 @admin.register(Category)
@@ -34,3 +34,11 @@ class ListAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name',]
 
 admin.site.register(UserAccount, ListAdmin)
+
+class ListTransfer(admin.ModelAdmin):
+    list_display = ['id', 'modified_date', 'user_id', 'status_id']
+    ordering = ['status_id']
+    list_filter = ('status_id',)
+    search_fields = ['id', 'user_id']
+
+admin.site.register(Transfer, ListTransfer)

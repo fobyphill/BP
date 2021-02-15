@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
-from app.models import Item, Transfer, ItemTransfer
+from app.models import Item, Transfer, ItemTransfer, StatusTransfer
 from django.urls import reverse
 
 
@@ -14,7 +14,7 @@ def index(request):
 
 def order_view(request):
     if request.method == "POST":
-        transfer = Transfer.objects.create(user_id=request.user.id)  # Создали заказ
+        transfer = Transfer.objects.create(user_id=request.user.id,)  # Создали заказ
         for key in request.POST:
             if key != 'csrfmiddlewaretoken':
                 ItemTransfer.objects.create(quantity=request.POST[key], item_id=key,

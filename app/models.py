@@ -94,7 +94,21 @@ class AccountManager(BaseUserManager):
 #         return self.username
 
 class UserAccount(AbstractUser):
-    inn = models.CharField(max_length=11, unique=True)
+    pass
+
+
+class UserPainInformation(models.Model):
+    id = models.OneToOneField(UserAccount, on_delete=models.DO_NOTHING, primary_key=True)
+    inn = models.CharField(max_length=12, unique=True)
+    kpp = models.CharField(max_length=9, null=True)
+    ogrn = models.CharField(max_length=13, null=True)
+    okpo = models.CharField(max_length=10, null=True)
+    oktmo = models.CharField(max_length=11, null=True)
+    legal_address = models.CharField(max_length=255, null=True)
+    full_name = models.CharField(max_length=255, null=True)
+    director = models.CharField(max_length=255, null=True)
+    state_status = models.CharField(max_length=10, null=True)
+
 
 
 class Category(BasicModels):
@@ -142,11 +156,18 @@ class Supplier(BasicModels):
         verbose_name_plural = "Suppliers"
 
 
+class StatusTransfer(models.Model):
+    id = models.CharField(max_length=1, primary_key=True)
+    description = models.CharField(max_length=255)
+
+
 class Transfer(BasicModels):
     #To = models.ForeignKey(Supplier, related_name="to+", on_delete=models.DO_NOTHING)
     items = models.ManyToManyField(Item, through="ItemTransfer")
     user = models.ForeignKey(UserAccount, on_delete=models.DO_NOTHING)
+    status = models.ForeignKey(StatusTransfer, on_delete=models.DO_NOTHING, default='n')
     #delivered_by = models.CharField(max_length=255, default='')
+
 
 
 class ItemTransfer(BasicModels):
