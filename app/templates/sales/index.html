@@ -52,6 +52,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
     <div class="row">
         <div class="col-md-7">
             <div class="card">
@@ -61,18 +64,23 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="card">
-                <div class="card-body">
-                    {% include 'sales/cart-items.html' %}
+            <form action="{% url 'order' %}" method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'sales/cart-items.html' %}
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    {% include 'sales/get-items.html' %}
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'sales/get-items.html' %}
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+
+
 {% endblock %}
 
 {% block extra_js %}
@@ -106,7 +114,7 @@
                         render  : function(data, type, row){
                             return '<div class="number">' +
                                         '<span class="minus">-</span>' +
-                                            '<input class="sales-input2" type="text"  name="' + data + '-quantity" value="1" max="' + row[6] + '"/>' +
+                                            '<input class="sales-input2" type="text"  name="' + data + '" value="1" max="' + row[6] + '"/>' +
                                         '<span class="plus">+</span>' +
                                     '</div>';
                         }
@@ -224,6 +232,12 @@
                 }
                 document.getElementById('itogo_table').children[0].children[0].children[1].innerHTML =
                      "<h4><u>" + String(itogo) + "</u></h4>";
+                //проверка активности кнопки
+                var button_order = document.getElementById('make_order')
+                if (cartTable.rows().count() > 0){
+                     button_order.disabled=false
+                 }
+                 else {button_order.disabled=true}
                 return false;
             }
         });

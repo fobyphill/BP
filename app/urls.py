@@ -10,4 +10,5 @@ urlpatterns = [
     path("login", common.login_view, name="login"),
     path("logout", common.logout_view, name="logout"),
     path("register", common.register, name="register"),
+    path('order', sales.order_view, name="order"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

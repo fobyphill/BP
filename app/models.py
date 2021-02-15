@@ -143,10 +143,10 @@ class Supplier(BasicModels):
 
 
 class Transfer(BasicModels):
-    To = models.ForeignKey(Supplier, related_name="to+", on_delete=models.DO_NOTHING)
+    #To = models.ForeignKey(Supplier, related_name="to+", on_delete=models.DO_NOTHING)
     items = models.ManyToManyField(Item, through="ItemTransfer")
     user = models.ForeignKey(UserAccount, on_delete=models.DO_NOTHING)
-    delivered_by = models.CharField(max_length=255, default='')
+    #delivered_by = models.CharField(max_length=255, default='')
 
 
 class ItemTransfer(BasicModels):
