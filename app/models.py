@@ -101,14 +101,14 @@ class UserPainInformation(models.Model):
     id = models.OneToOneField(UserAccount, on_delete=models.DO_NOTHING, primary_key=True)
     inn = models.CharField(max_length=12, unique=True)
     kpp = models.CharField(max_length=9, null=True)
-    ogrn = models.CharField(max_length=13, null=True)
+    ogrn = models.CharField(max_length=15, null=True)
     okpo = models.CharField(max_length=10, null=True)
     oktmo = models.CharField(max_length=11, null=True)
     legal_address = models.CharField(max_length=255, null=True)
     full_name = models.CharField(max_length=255, null=True)
     director = models.CharField(max_length=255, null=True)
     state_status = models.CharField(max_length=10, null=True)
-
+    type = models.CharField(max_length=10, default='INDIVIDUAL')
 
 
 class Category(BasicModels):

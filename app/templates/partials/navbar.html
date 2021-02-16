@@ -1,25 +1,28 @@
 {% load static %}
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-        {% comment %}<li class="nav-item d-none d-sm-inline-block bg-success">
-            <a href="{% url 'index' %}" class="nav-link"><span class="text-bold text-white">BP Services</span></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{% url 'sales' %}" class="nav-link"><span class="text-bold">Sales</span></a>
-        </li>{% endcomment %}
-        <li class="nav-item d-none d-sm-inline-block">
-            <span class="text-bold">Здравствуйте, {{ request.user.first_name }} {{ request.user.last_name }}.
-        Ваш ИНН  {{ request.user.inn }}</span></a>
+<div style="margin: 0">
+    <div >
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <h4>Здравствуйте, {{ request.user.first_name }} {{ request.user.last_name }}.</h4>
+        Ваш ИНН  {{ request.user.userpaininformation.inn }}. ОГРН: {{ request.user.userpaininformation.ogrn }}.
+            ОКПО: {{ request.user.userpaininformation.okpo }}.
+            Название предприятия: {{ request.user.userpaininformation.full_name }}.
+            Адрес: {{ request.user.userpaininformation.legal_address }}.
+            {% if request.user.userpaininformation.type == 'LEGAL' %}
+            ОКТМО: {{ request.user.userpaininformation.oktmo }}.
+                КПП: {{ request.user.userpaininformation.kpp }}.
+                Директор: {{ request.user.userpaininformation.director }}.
+            {% endif %}
         </li>
     </ul>
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+    </div>
+    <div>
+        <ul class="navbar-nav" style="margin: 0">
         <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}" >
-                <span class="text-bold">Log Out</span></a>
+                <span class="text-bold">Выход</span></a>
             </a>
         </li>
     </ul>
-</nav>
+    </div>
+</div>
