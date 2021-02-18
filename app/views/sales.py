@@ -5,12 +5,18 @@ from django.urls import reverse
 
 
 def index(request):
-    items = Item.objects.filter(is_active=True)
-    ctx = {
-        'title': 'Sales',
-        'items': items
-    }
-    return render(request, 'sales/index.html', ctx)
+    return HttpResponseRedirect(reverse("sales"))
+
+def sales(request):
+    if request.user.is_authenticated:
+        items = Item.objects.filter(is_active=True)
+        ctx = {
+            'title': 'Sales',
+            'items': items
+        }
+        return render(request, "sales/index.html", ctx)
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 def order_view(request):
     if request.method == "POST":
@@ -22,3 +28,6 @@ def order_view(request):
         return render(request, 'order.html', context={'order_id': transfer.id})
     else:
         return HttpResponseRedirect(reverse("index"))
+
+def orders(request):
+    return HttpResponse("<h3>Здесь будут ваши заказы</h3>")

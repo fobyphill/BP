@@ -29,7 +29,7 @@ def login_view(request):
         # Check if authentication successful
         if UserAccount is not None:
             login(request, UserAccount)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("sales"))
         else:
             return render(request, "login.html", {
                 "message": "Invalid email and/or password."
@@ -39,7 +39,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("sales"))
 
 def register(request):
     if request.method == "POST":
