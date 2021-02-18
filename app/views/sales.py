@@ -30,4 +30,9 @@ def order_view(request):
         return HttpResponseRedirect(reverse("index"))
 
 def orders(request):
-    return HttpResponse("<h3>Здесь будут ваши заказы</h3>")
+    orders = Transfer.objects.filter(user_id=request.user.id)
+    ctx = {
+        'title': 'Ваши заказы',
+        'orders': orders,
+    }
+    return render(request, 'sales/orders.html', ctx)

@@ -56,27 +56,18 @@
         <div>{{ message }}</div>
     {% endif %}
     <div class="row">
-        <div class="col-md-7">
+        <div class="col">
             <div class="card">
                 <div class="card-body">
-                    {% include 'sales/items.html' %}
+                    {% for order in orders %}
+                        <h4>Заказ № {{ order.id }} от {{ order.created_date|date:"d m Y" }}. Статус заказа {{ order.status.description }} </h4>
+
+                        {% for clause in order.itemtransfer_set.all %}
+                            Товар: {{ clause.id }} <br />
+                        {% endfor %}
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        <div class="col-md-5">
-            <form action="{% url 'order' %}" method="post">
-                {% csrf_token %}
-                <div class="card">
-                    <div class="card-body">
-                        {% include 'sales/cart-items.html' %}
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        {% include 'sales/get-items.html' %}
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 
