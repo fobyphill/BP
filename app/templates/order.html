@@ -1,3 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <h1>Спасибо за Ваш заказ.</h1>
+    <h3>Номер заказа {{ order_id }}. В ближайшее время наш менеджер свяжется с Вами для уточнения деталей</h3>
+{% endblock %}
+
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>

@@ -73,7 +73,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        {% include 'sales/my-items.html' %}
+                        {% include 'sales/get-items.html' %}
                     </div>
                 </div>
             </form>
@@ -100,7 +100,6 @@
                     searchField.addClass('mr-auto')
                 }
             });
-
             var cartTable = $('#cart-table').DataTable({
                 responsive: true,
                 paging: false,
@@ -129,8 +128,8 @@
                     {
                         targets: [4],
                         render  : function(data, type, row){
-                             return '<div class="total-field"><span id="'+ row[7] +'_total">'
-                                 + Number(data).toFixed(3) + '</span></div>';
+                             return '<div class="sales-input2"><input name="'+row[7]+'_total"    type="text"'+
+                             'style="width:8ch" value="'+Number(data).toFixed(3)+'" readonly>';
                         }
                     },
                     {
@@ -171,8 +170,8 @@
                      $input_change[0].value = num
                  }
                  let price = parseFloat($tds[1].childNodes[0].nodeValue);
-                 let $total = $tds[4].children[0];
-                 $total.innerText = String(price * num);
+                 let $total = $tds[4].children[0].children[0];
+                 $total.value = String(price * num);
                  cartTable.row().data()[4] = String(num * price);
                  calc_cart();
                  return false;
@@ -228,7 +227,7 @@
                 let itogo = 0;// Итоговая потребительская сумма
                 let table_cart = document.getElementById('cart-table').children[1] // тело таблицы
                 for (let i = 0; i < cartTable.rows().count(); i++){
-                    itogo += parseFloat(table_cart.children[i].children[4].textContent);
+                    itogo += parseFloat(table_cart.children[i].children[4].children[0].children[0].value);
                 }
                 document.getElementById('itogo_table').children[0].children[0].children[1].innerHTML =
                      "<h4><u>" + String(itogo) + "</u></h4>";

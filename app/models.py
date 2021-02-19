@@ -171,7 +171,8 @@ class Transfer(BasicModels):
 
 
 class ItemTransfer(BasicModels):
-    quantity = models.DecimalField(null=True, blank=True, decimal_places=3, max_digits=15)
+    quantity = models.IntegerField(default=1)
+    total = models.FloatField(default=1000)
     item = models.ForeignKey(Item, on_delete=models.DO_NOTHING)
     transfer = models.ForeignKey(Transfer, null=True, blank=True, on_delete=models.DO_NOTHING)
 
