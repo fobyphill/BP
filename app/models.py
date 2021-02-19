@@ -20,6 +20,13 @@ class MyManager(models.Manager):
         finally:
             cursor.close()
 
+class ClientManager(models.Model):
+    email = models.CharField(max_length=30, primary_key=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+class UserAccount(AbstractUser):
+    manager = models.ForeignKey(ClientManager, on_delete=models.DO_NOTHING, default='admin@admin.ru')
 
 class BasicModels(models.Model):
     modified_date = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -92,10 +99,6 @@ class AccountManager(BaseUserManager):
 #
 #     def __unicode__(self):
 #         return self.username
-
-class UserAccount(AbstractUser):
-    pass
-
 
 class UserPainInformation(models.Model):
     id = models.OneToOneField(UserAccount, on_delete=models.DO_NOTHING, primary_key=True)
@@ -256,3 +259,5 @@ class Event(BasicModels):
         db_table = 'events'
         verbose_name = 'Event Log'
         verbose_name_plural = "Event Logs"
+
+

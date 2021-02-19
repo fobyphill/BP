@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Item, Supplier, Category, UserAccount, Transfer, UserPainInformation
+from app.models import Item, Supplier, Category, UserAccount, Transfer, UserPainInformation, ClientManager
 
 
 @admin.register(Category)
@@ -36,9 +36,9 @@ class ListAdmin(admin.ModelAdmin):
     ordering = ['is_active']
     list_filter = ('is_active',)
     actions = [set_active_user, set_passive_user]
-    search_fields = ['first_name', 'last_name',]
-
-
+    search_fields = ['first_name', 'last_name', ]
+    exclude = ('password', 'last_login', 'is_superuser', 'is_staf', 'Groups')
+    # fields = ('UserName', 'first_name', 'last_name', 'email', 'manager_id')
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -47,10 +47,11 @@ class ListAdmin(admin.ModelAdmin):
 
 admin.site.register(UserAccount, ListAdmin)
 
+class AdminClinentManager(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name', ]
 
 
-
-
+admin.site.register(ClientManager, AdminClinentManager)
 
 # class ListTransfer(admin.ModelAdmin):
 #     list_display = ['id', 'modified_date', 'user_id', 'status_id']

@@ -54,7 +54,7 @@ def register(request):
 
         if password != confirmation:
             return render(request, "register.html", {
-                "message": "Passwords must match."
+                "message": "Введите корректно пароль дважды."
             })
         if firstname == '' or lastname == '' or inn == '':
             return render(request, 'register.html', {
